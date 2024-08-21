@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registration Process Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: beige;
+      margin: 0;
+      padding: 20px;
+      position: relative;
+    }
+    .header {
+      
+      padding: 10px;
+      display: flex;
+      align-items: center;
+    }
+
+    .header img {
+      height: 50px;
+      filter: invert(1); 
+    }
+    .back-btn {
+      background-color: green;
+      color: white;
+      padding: 8px 16px;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+      margin-left: auto; 
+    }
+   
+    .dashboard-container {
+      max-width: 1200px;
+      margin: auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    
+    .progress-indicator {
+      display: flex;
+      justify-content: space-between;
+      margin: 40px 0;
+    }
+
+    .progress-steps {
+      display: flex;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      width: 100%;
+      position: relative;
+    }
+
+    .step {
+      flex: 1;
+      text-align: center;
+      position: relative;
+      padding: 10px;
+      color: #888;
+      font-weight: bold;
+    }
+
+    .step.completed {
+      color: green;
+    }
+
+    .step::before {
+      content: '';
+      display: block;
+      height: 4px;
+      width: 100%;
+      background-color: #ccc;
+      position: absolute;
+      top: 50%;
+      left: -50%;
+      z-index: -1;
+    }
+
+    .step:first-child::before {
+      display: none;
+    }
+
+    .step.completed::before {
+      background-color: green;
+    }
+
+    
+    .step-circle {
+      width: 30px;
+      height: 30px;
+      background-color: #ccc;
+      border-radius: 50%;
+      margin: 0 auto 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+    }
+
+    .step.completed .step-circle {
+      background-color: green;
+    }
+
+    
+    .stage-details {
+      background-color: #f9f9f9;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+      text-align: center;
+    }
+
+    .stage-details h2 {
+      margin-top: 0;
+      color: #333;
+    }
+
+    .stage-details p {
+      color: #555;
+    }
+
+   
+    #download-button {
+      display: none;
+      margin-top: 20px;
+      background-color: green;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    #download-button:hover {
+      background-color: darkgreen;
+    }
+
+    
+    .logo {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      width: 50px;
+      height: auto;
+    }
+
+    .nav-links {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #007bff;
+      font-size: 16px;
+      margin-left: 20px;
+    }
+
+    .nav-links a:hover {
+      text-decoration: underline;
+    }
+
+   
+    @media (max-width: 768px) {
+      .progress-indicator {
+        flex-direction: column;
+      }
+
+      .progress-steps {
+        flex-direction: column;
+      }
+
+      .step {
+        margin-bottom: 20px;
+      }
+
+      .step::before {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <img src="Gov of IND.png" alt="Ministry of India Logo">
+    <img src="1.jpg" alt="Ministry of India Logo">
+    <a href="home.html" class="back-btn">Back to Home</a>
+    
+  </div>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <div class="dashboard-container">
+    <h1>Registration Process</h1>
+    <div class="progress-indicator">
+      <ul class="progress-steps">
+        <li class="step">
+          <div class="step-circle">1</div>
+          Form Submission
+        </li>
+        <li class="step">
+          <div class="step-circle">2</div>
+          Document Upload
+        </li>
+        <li class="step">
+          <div class="step-circle">3</div>
+          AI Verification
+        </li>
+        <li class="step">
+          <div class="step-circle">4</div>
+          Certificate Verification
+        </li>
+        <li class="step">
+          <div class="step-circle">5</div>
+          Eligibility Check
+        </li>
+        <li class="step">
+          <div class="step-circle">6</div>
+          Payment
+        </li>
+        <li class="step">
+          <div class="step-circle">7</div>
+          Final Submission
+        </li>
+      </ul>
+    </div>
+    <div class="stage-details">
+      <h2>Current Stage: Form Submission</h2>
+      <p>Status: In Progress</p>
+    </div>
+    <button id="download-button">Download Your Certificate</button>
+  </div>
+
+  <script>
+    let currentStage = 0;
+    const stages = [
+      'Form Submission',
+      'Document Upload',
+      'AI Verification',
+      'Certificate Verification',
+      'Eligibility Check',
+      'Payment',
+      'Final Submission'
+    ];
+
+    function updateProgress(stage) {
+      const steps = document.querySelectorAll('.step');
+      steps.forEach((step, index) => {
+        if (index <= stage) {
+          step.classList.add('completed');
+        } else {
+          step.classList.remove('completed');
+        }
+      });
+
+      document.querySelector('.stage-details h2').innerText = `Current Stage: ${stages[stage]}`;
+      document.querySelector('.stage-details p').innerText = stage < steps.length - 1 ? 'Status: In Progress' : 'Status: Completed';
+      if (stage === steps.length - 1) {
+        document.getElementById('download-button').style.display = 'block';
+      }
+    }
+
+    function simulateProgress() {
+      if (currentStage < stages.length) {
+        updateProgress(currentStage);
+        currentStage++;
+      } else {
+        clearInterval(progressInterval);
+        document.querySelector('.stage-details h2').innerText = 'Verification Completed';
+        document.querySelector('.stage-details p').innerText = 'Status: Completed';
+      }
+    }
+    const progressInterval = setInterval(simulateProgress, 1000);
+  </script>
+
+</body>
+</html>
